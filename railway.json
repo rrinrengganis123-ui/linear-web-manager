@@ -1,0 +1,11 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS",
+    "nixpacksConfigPath": "nixpacks-config.toml"
+  },
+  "deploy": {
+    "startCommand": "php -S 0.0.0.0:$PORT -t .",
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
