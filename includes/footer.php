@@ -5,6 +5,6 @@
 
 <div id="toast-container"></div>
 
-<script src="<?= $base ?>assets/js/main.js" defer></script>
+<script src="https://linearweb.infinityfreeapp.com/assets/js/main.js" defer></script>
 </body>
 </html>

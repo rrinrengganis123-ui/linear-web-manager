@@ -16,9 +16,6 @@ try {
 
     switch ($action) {
 
-        // =========================================
-        // PUSH — tambah item ke atas stack
-        // =========================================
         case 'PUSH':
             $value = trim($input['value'] ?? '');
             if ($value === '') {
@@ -26,20 +23,16 @@ try {
                 exit;
             }
 
-            // Hitung posisi baru (top of stack)
             $maxPos = $db->prepare("SELECT COALESCE(MAX(position), -1) + 1 FROM stack_items WHERE session_id = ?");
             $maxPos->execute([$sessId]);
             $newPos = (int)$maxPos->fetchColumn();
 
-            // Insert item baru
             $stmt = $db->prepare("INSERT INTO stack_items (session_id, value, position) VALUES (?, ?, ?)");
             $stmt->execute([$sessId, $value, $newPos]);
 
-            // Catat ke log
             $log = $db->prepare("INSERT INTO stack_log (session_id, action, value) VALUES (?, 'PUSH', ?)");
             $log->execute([$sessId, $value]);
 
-            // Ambil semua item terbaru
             $items = getStackItems($db, $sessId);
 
             echo json_encode([
@@ -50,11 +43,7 @@ try {
             ]);
             break;
 
-        // =========================================
-        // POP — hapus item teratas stack
-        // =========================================
         case 'POP':
-            // Ambil item teratas (posisi MAX)
             $stmt = $db->prepare("SELECT * FROM stack_items WHERE session_id = ? ORDER BY position DESC LIMIT 1");
             $stmt->execute([$sessId]);
             $top = $stmt->fetch();
@@ -64,11 +53,9 @@ try {
                 exit;
             }
 
-            // Hapus item teratas
             $del = $db->prepare("DELETE FROM stack_items WHERE id = ?");
             $del->execute([$top['id']]);
 
-            // Catat ke log
             $log = $db->prepare("INSERT INTO stack_log (session_id, action, value) VALUES (?, 'POP', ?)");
             $log->execute([$sessId, $top['value']]);
 
@@ -83,9 +70,6 @@ try {
             ]);
             break;
 
-        // =========================================
-        // PEEK — lihat item teratas tanpa hapus
-        // =========================================
         case 'PEEK':
             $stmt = $db->prepare("SELECT * FROM stack_items WHERE session_id = ? ORDER BY position DESC LIMIT 1");
             $stmt->execute([$sessId]);
@@ -96,7 +80,6 @@ try {
                 exit;
             }
 
-            // Catat ke log
             $log = $db->prepare("INSERT INTO stack_log (session_id, action, value) VALUES (?, 'PEEK', ?)");
             $log->execute([$sessId, $top['value']]);
 
@@ -107,9 +90,6 @@ try {
             ]);
             break;
 
-        // =========================================
-        // CLEAR — hapus semua item dalam stack
-        // =========================================
         case 'CLEAR':
             $stmt = $db->prepare("DELETE FROM stack_items WHERE session_id = ?");
             $stmt->execute([$sessId]);
@@ -130,12 +110,6 @@ try {
     echo json_encode(['success' => true, 'message' => 'Log berhasil dihapus']);
     break;
 
-case 'CLEAR_LOG':
-    $stmt = $db->prepare("DELETE FROM stack_log WHERE session_id = ?");
-    $stmt->execute([$sessId]);
-    echo json_encode(['success' => true, 'message' => 'Log berhasil dihapus']);
-    break;
-
 default:
     echo json_encode(['success' => false, 'message' => 'Action tidak dikenal']);
     }
@@ -144,9 +118,6 @@ default:
     echo json_encode(['success' => false, 'message' => 'DB Error: ' . $e->getMessage()]);
 }
 
-// =========================================
-// HELPER — ambil semua item stack terurut
-// =========================================
 function getStackItems(PDO $db, int $sessId): array {
     $stmt = $db->prepare("SELECT * FROM stack_items WHERE session_id = ? ORDER BY position ASC");
     $stmt->execute([$sessId]);

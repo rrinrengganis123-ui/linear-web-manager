@@ -1,8 +1,11 @@
-<?php
+﻿<?php
 $pageTitle  = 'Linked List';
 $pageActive = 'linked-list';
+
 require_once '../../config/database.php';
+
 $db = getDB();
+
 require_once '../../includes/header.php';
 
 $nodes   = $db->query("SELECT * FROM playlist_nodes WHERE session_id = 1 ORDER BY position ASC")->fetchAll();
@@ -72,7 +75,7 @@ $session = $db->query("SELECT * FROM playlist_sessions WHERE id = 1")->fetch();
         <div class="card">
             <div class="card-title">
                 🔗 Visualisasi Doubly Linked List
-                <span class="tag" id="nodeCount"><?= count($nodes) ?> node</span>
+                <span class="tag" id="nodeCount"><?php echo count($nodes); ?> node</span>
             </div>
 
             <!-- Label HEAD & TAIL -->
@@ -194,9 +197,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-window._highlightIds = res.nodes.length > 0 ? [res.nodes[0].id, res.nodes[res.nodes.length-1].id] : [];
-setTimeout(function(){ window._highlightIds = []; }, 1500);
-
 async function doInsertHead() {
     var title    = document.getElementById('inputTitle').value.trim();
     var artist   = document.getElementById('inputArtist').value.trim() || 'Unknown';
@@ -207,8 +207,7 @@ async function doInsertHead() {
     else { showToast(res.message, 'danger'); }
 }
 
-window._highlightIds = res.nodes.length > 0 ? [res.nodes[0].id, res.nodes[res.nodes.length-1].id] : [];
-setTimeout(function(){ window._highlightIds = []; }, 1500);
+
 
 async function doInsertTail() {
     var title    = document.getElementById('inputTitle').value.trim();
@@ -220,8 +219,6 @@ async function doInsertTail() {
     else { showToast(res.message, 'danger'); }
 }
 
-window._highlightIds = res.nodes.length > 0 ? [res.nodes[0].id, res.nodes[res.nodes.length-1].id] : [];
-setTimeout(function(){ window._highlightIds = []; }, 1500);
 
 async function doDeleteHead() {
     if (!confirmDelete('Hapus node HEAD?')) return;
@@ -230,8 +227,6 @@ async function doDeleteHead() {
     else { showToast(res.message, 'danger'); }
 }
 
-window._highlightIds = res.nodes.length > 0 ? [res.nodes[0].id, res.nodes[res.nodes.length-1].id] : [];
-setTimeout(function(){ window._highlightIds = []; }, 1500);
 
 async function doDeleteTail() {
     if (!confirmDelete('Hapus node TAIL?')) return;
@@ -240,8 +235,6 @@ async function doDeleteTail() {
     else { showToast(res.message, 'danger'); }
 }
 
-window._highlightIds = res.nodes.length > 0 ? [res.nodes[0].id, res.nodes[res.nodes.length-1].id] : [];
-setTimeout(function(){ window._highlightIds = []; }, 1500);
 
 async function doDeleteAt(nodeId) {
     if (!confirmDelete('Hapus node ini?')) return;
@@ -250,8 +243,6 @@ async function doDeleteAt(nodeId) {
     else { showToast(res.message, 'danger'); }
 }
 
-window._highlightIds = res.nodes.length > 0 ? [res.nodes[0].id, res.nodes[res.nodes.length-1].id] : [];
-setTimeout(function(){ window._highlightIds = []; }, 1500);
 
 async function doClear() {
     if (!confirmDelete('Hapus semua node dalam playlist?')) return;

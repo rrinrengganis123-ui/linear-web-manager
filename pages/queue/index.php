@@ -9,9 +9,17 @@ $items   = $db->query("SELECT * FROM queue_items WHERE session_id = 1 ORDER BY i
 $logs    = $db->query("SELECT * FROM queue_log WHERE session_id = 1 ORDER BY acted_at DESC LIMIT 10")->fetchAll();
 $session = $db->query("SELECT * FROM queue_sessions WHERE id = 1")->fetch();
 
-$waiting    = array_filter($items, fn($i) => $i['status'] === 'waiting');
-$processing = array_filter($items, fn($i) => $i['status'] === 'processing');
-$done       = array_filter($items, fn($i) => $i['status'] === 'done');
+$waiting = array_filter($items, function($i) {
+    return $i['status'] === 'waiting';
+});
+
+$processing = array_filter($items, function($i) {
+    return $i['status'] === 'processing';
+});
+
+$done = array_filter($items, function($i) {
+    return $i['status'] === 'done';
+});
 ?>
 
 <div class="page-header">
@@ -59,7 +67,7 @@ $done       = array_filter($items, fn($i) => $i['status'] === 'done');
         <div class="card">
             <div class="card-title">
                 🎫 Visualisasi Queue
-                <span class="tag" id="queueCount"><?= count($waiting) ?> menunggu</span>
+                <span class="tag" id="queueCount"><?php echo count($waiting); ?> menunggu</span>
             </div>
 
             <!-- Label FRONT & REAR -->
@@ -117,7 +125,7 @@ $done       = array_filter($items, fn($i) => $i['status'] === 'done');
                 <div style="background:var(--bg3); border:1px solid var(--border);
                             border-radius:8px; padding:12px; text-align:center;">
                     <div style="font-family:var(--mono); font-size:20px;
-                                color:var(--warning);" id="statWaiting"><?= count($waiting) ?></div>
+                                color:var(--warning);" id="statWaiting"><?php echo count($waiting); ?></div>
                     <div style="font-size:11px; color:var(--text3); margin-top:4px;">Menunggu</div>
                 </div>
                 <div style="background:var(--bg3); border:1px solid var(--border);

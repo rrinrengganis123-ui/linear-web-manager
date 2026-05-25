@@ -107,7 +107,7 @@ $logs    = $db->query("SELECT * FROM stack_log WHERE session_id = 1 ORDER BY act
     <div class="card">
         <div class="card-title">
             📚 Visualisasi Stack
-            <span class="tag" id="stackCount"><?= count($items) ?> item</span>
+            <span class="tag" id="stackCount"><?php echo count($items); ?> item</span>
         </div>
 
         <div style="display:flex; justify-content:space-between;
@@ -125,12 +125,12 @@ $logs    = $db->query("SELECT * FROM stack_log WHERE session_id = 1 ORDER BY act
                 <div class="viz-empty">Stack kosong — mulai PUSH item</div>
             <?php else: ?>
                 <?php foreach ($items as $i => $item): ?>
-                <div class="node-box" id="node-<?= $item['id'] ?>">
+                <div class="node-box" id="node-<?php echo $item['id']; ?>"
                     <div class="node-val node-stack <?= $i===count($items)-1 ? 'top-node':'' ?>"
                          style="width:100%; display:flex;
                                 justify-content:space-between; align-items:center;">
                         <span style="font-family:var(--mono); font-size:10px; color:var(--text3);">[<?= $item['position'] ?>]</span>
-                        <span><?= htmlspecialchars($item['value']) ?></span>
+                        <span><?php echo htmlspecialchars($item['value']); ?></span>
                         <span style="font-size:10px; color:var(--text3);"><?= $i===count($items)-1 ? '← TOP':'' ?></span>
                     </div>
                 </div>
