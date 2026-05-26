@@ -187,7 +187,7 @@ $done = array_filter($items, function($i) {
 </div>
 
 <script>
-const API        = '/linear-web-manager/api/queue.php';
+const API = '/api/queue.php';
 const SESSION_ID = 1;
 
 document.addEventListener('DOMContentLoaded', function() {

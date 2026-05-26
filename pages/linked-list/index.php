@@ -188,7 +188,7 @@ $session = $db->query("SELECT * FROM playlist_sessions WHERE id = 1")->fetch();
 </div>
 
 <script>
-const API        = '/linear-web-manager/api/linked-list.php';
+const API        = '/api/linked-list.php';
 const SESSION_ID = 1;
 
 document.addEventListener('DOMContentLoaded', function() {

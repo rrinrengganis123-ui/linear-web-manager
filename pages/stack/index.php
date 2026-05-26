@@ -184,7 +184,7 @@ $logs    = $db->query("SELECT * FROM stack_log WHERE session_id = 1 ORDER BY act
 </style>
 
 <script>
-const API        = '/linear-web-manager/api/stack.php';
+const API = '/api/stack.php';
 const SESSION_ID = 1;
 
 // ── EDITOR STATE ─────────────────────────────
