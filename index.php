@@ -596,24 +596,24 @@ body {
     <nav class="nav-section">
         <div class="nav-label">Menu</div>
 
-        <a href="index.php" class="nav-item active">
+        <a href="/" class="nav-item active">
             <span class="dot dot-home"></span>
             Dashboard
         </a>
 
-        <a href="pages/stack/index.php" class="nav-item">
+        <a href="/pages/stack/" class="nav-item">
             <span class="dot dot-stack"></span>
             Stack
             <span class="badge"><?= $stackCount ?></span>
         </a>
 
-        <a href="pages/queue/index.php" class="nav-item">
+        <a href="/pages/queue/" class="nav-item">
             <span class="dot dot-queue"></span>
             Queue
             <span class="badge"><?= $queueTotal ?></span>
         </a>
 
-        <a href="pages/linked-list/index.php" class="nav-item">
+        <a href="/pages/linked-list/" class="nav-item">
             <span class="dot dot-list"></span>
             Linked List
             <span class="badge"><?= $playlistCount ?></span>
