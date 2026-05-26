@@ -11,7 +11,7 @@ try {
     $badgeStack = $badgeQueue = $badgeList = 0;
 }
 
-$base = 'https://linearweb.infinityfreeapp.com/';
+$base = '/';
 ?>
 <!DOCTYPE html>
 <html lang="id">
